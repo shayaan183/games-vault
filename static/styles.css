@@ -1,0 +1,27 @@
+.logo-font {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 25px;
+}
+
+* {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.navbar {
+    font-size: large;
+    margin: auto;
+}
+
+.alert {
+    width: 50%;
+    margin: auto;
+}
+
+.nav {
+    font-size: large;
+}
+
+form {
+    font-size: large;
+}
+

@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+<div class="row row-cols-2 align-items-center">
+    <div class="col pb-3" id="img-random"></div>
+    <div class="col">
+        <div class="pb-3">
+            <h3>Hello, {{ name }}!</h2>
+            <h5>Let's get to searching:</h5>
+        </div>
+        <form action="/result" method="post">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="name" name="name" placeholder="Name of game" type="text">
+            </div>
+            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i> Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/image.js"></script>
+{% endblock %}

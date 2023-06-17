@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block main %}
+
+<!-- Success message -->
+{% if message_success %}
+<header>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-lg"></i>
+        {{ message_success }}. Please <a href="/settings" class="alert-link">click here</a> to update
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</header>
+{% endif %}
+
+<!-- Error message -->
+{% if message_err %}
+<header>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        {{ message_err }}. <a href="/settings" class="alert-link">Refresh</a>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</header>
+{% endif %}
+
+<div>
+    <h3 class="pb-3">Account Settings <i class="bi bi-gear"></i></h3>
+</div>
+
+<div class="row row-cols-2 align-items-center">
+    <div class="col" id="img-random"></div>
+    <div class="col">
+        <div class="card text-center h-1000">
+            <div class="card-header">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-name-tab" data-bs-toggle="tab" data-bs-target="#nav-name" type="button" role="tab" aria-controls="nav-name" aria-selected="true">Change Name</button>
+                        <button class="nav-link" id="nav-username-tab" data-bs-toggle="tab" data-bs-target="#nav-username" type="button" role="tab" aria-controls="nav-username" aria-selected="false">Change Username</button>
+                        <button class="nav-link" id="nav-password-tab" data-bs-toggle="tab" data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password" aria-selected="false">Change Password</button>
+                    </div>
+                </nav>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="settingsContent">
+                    <!-- Change name -->
+                    <div class="tab-pane fade show active" id="nav-name" role="tabpanel" aria-labelledby="nav-name-tab" tabindex="0">
+                        <h4><strong>Current name: </strong>{{  current_name }}</h4>
+                        <form class="pt-3" action="/settings" method="post">
+                            <div class="mb-3">
+                                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="name" name="name" placeholder="Name" type="text">
+                            </div>
+                            <button class="btn btn-outline-secondary" type="submit">Change name</button>
+                        </form>
+                    </div>
+                    <!-- Change username -->
+                    <div class="tab-pane fade" id="nav-username" role="tabpanel" aria-labelledby="nav-username-tab" tabindex="0">
+                        <h4><strong>Current username: </strong>{{  current_username }}</h4>
+                        <form class="pt-3" action="/settings" method="post">
+                            <div class="mb-3">
+                                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+                            </div>
+                            <button class="btn btn-outline-secondary" type="submit">Change username</button>
+                        </form>
+                    </div>
+                    <!-- Change password -->
+                    <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab" tabindex="0">
+                        <form action="/settings" method="post">
+                            <div class="mb-3">
+                                <input class="form-control mx-auto w-auto" id="password_old" name="password_old" placeholder="Old password" type="password">
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control mx-auto w-auto" id="password_new" name="password_new" placeholder="New password" type="password">
+                            </div>
+                            <div class="mb-3">
+                                <input class="form-control mx-auto w-auto" id="confirmation" name="confirmation" placeholder="New password (again)" type="password">
+                            </div>
+                            <button class="btn btn-outline-secondary" type="submit">Change password</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="/static/js/image.js"></script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Your Vault
+{% endblock %}
+
+{% block main %}
+
+{% if not saved %}
+<div>
+    <h3>You have nothing in your vault</h3>
+    <h5>Add a game to your vault by clicking <a href="/" class="link-secondary">here</a></h3>
+</div>
+{% else %}
+<div>
+    <h3 class="pb-3">Welcome to Your Vault <i class="bi bi-safe"></i></h3>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for game in saved %}
+    <div class="col">
+        <div class="card">
+            <img src="{{ game[5] }}" class="card-img-top" alt="{{ game[3] }}">
+            <h5 class="card-title pt-2 pb-2">{{ game[3] }}</h5>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#{{ game[2] }}">
+                <i class="bi bi-info-circle-fill"></i> Learn more
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% for game in saved %}
+<div class="modal fade modal-lg" id="{{ game[2] }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">{{ game[3] }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ game[5] }}" class="card-img-top pb-3" alt="{{ game[3] }}">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Released</h5>
+                            <p class="text-start">{{ game[4] }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Platforms</h5>
+                            <p class="text-start">{{ game[8] }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Metacritic</h5>
+                            <p class="text-start">{{ game[6] }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">ESRB rating</h5>
+                            <p class="text-start">{{ game[7] }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Genres</h5>
+                            <p class="text-start">{{ game[9] }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Where to buy</h5>
+                            <p class="text-start">{{ game[10] }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="/remove" method="POST">
+                    <input type="hidden" name="id" value="{{ game[2] }}">
+                    <button class="btn btn-outline-danger" type="submit"><i class="bi bi-bookmark-x-fill"></i> Remove from vault</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% if saved %}
+<div>
+    <p class="pt-4">To make a new search, <a href="/" class="link-secondary">click here</a></p>
+</div>
+{% endif %}
+
+{% endblock %}

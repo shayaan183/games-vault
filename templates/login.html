@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Log In
+{% endblock %}
+
+{% block main %}
+
+<!-- Error message -->
+{% if message %}
+<header>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</header>
+{% endif %}
+
+<div class="row row-cols-2 align-items-center">
+    <div class="col" id="img-random"></div>
+    <div class="col">
+        <form action="/login" method="post">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+            </div>
+            <div class="mb-3">
+                <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
+            </div>
+            <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-box-arrow-in-right"></i> Log In</button>
+        </form>
+        <p class="pt-2">Don't have an account? <a href="/register" class="link-secondary">Register</a></p>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+<script src="/static/js/image.js"></script>
+{% endblock %}

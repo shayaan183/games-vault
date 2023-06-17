@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Result
+{% endblock %}
+
+{% block main %}
+
+<!-- Validation -->
+<div class="pb-3">
+    {% if not games %}
+    <h3>No results! <a href="/" class="link-secondary">Search again</a></h3>
+    {% else %}
+    <h3>Here are your results for "{{ game_search }}":</h3>
+    {% endif %}
+</div>
+
+<!-- Cards for each game -->
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for game in games %}
+    <div class="col">
+        <div class="card">
+            <img src="{{ game.background_image }}" class="card-img-top" alt="{{ game.name }}">
+            <h5 class="card-title pt-2 pb-2">{{ game.name }}</h5>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#{{ game.id }}">
+                <i class="bi bi-info-circle-fill"></i> Learn more
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Modals for each game -->
+{% for game in games %}
+<div class="modal fade modal-lg" id="{{ game.id }}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">{{ game.name }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ game.background_image }}" class="card-img-top pb-3" alt="{{ game.name }}">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Released</h5>
+                            <p class="text-start">{{ game.released }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Platforms</h5>
+                            <p class="text-start">{{ game.platform }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Metacritic</h5>
+                            <p class="text-start">{{ game.metacritic }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">ESRB rating</h5>
+                            <p class="text-start">{{ game.esrb }}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Genres</h5>
+                            <p class="text-start">{{ game.genres }}</p>
+                        </div>
+                        <div class="col">
+                            <h5 class="fw-bold text-start">Where to buy</h5>
+                            <p class="text-start">{{ game.stores }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form action="/add" method="POST">
+                    <input type="hidden" name="id" value="{{ game.id }}">
+                    <input type="hidden" name="name" value="{{ game.name }}">
+                    <input type="hidden" name="released" value="{{ game.released }}">
+                    <input type="hidden" name="background_image" value="{{ game.background_image }}">
+                    <input type="hidden" name="metacritic" value="{{ game.metacritic }}">
+                    <input type="hidden" name="esrb" value="{{ game.esrb }}">
+                    <input type="hidden" name="platform" value="{{ game.platform }}">
+                    <input type="hidden" name="genres" value="{{ game.genres }}">
+                    <input type="hidden" name="stores" value="{{ game.stores }}">
+                    {% if game.id in saved_game_id|map(attribute=0) %}
+                    <button class="btn btn-outline-success" disabled><i class="bi bi-bookmark-fill"></i> Already in vault</button>
+                    {% else %}
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-bookmark-plus-fill"></i> Add to vault</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<div>
+    {% if games %}
+    <p class="pt-4">To make a new search, <a href="/" class="link-secondary">click here</a></p>
+    {% endif %}
+</div>
+
+{% endblock %}
